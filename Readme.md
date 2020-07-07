@@ -1,4 +1,4 @@
-## 					Group Video Chat : Watch You-Tube Together 
+## 					Group Video Chat : Watch You-Tube Together <sup>Beta</sup>
 
 [![Website shields.io](https://img.shields.io/badge/Version-0.9-GREEN)](https://vch1.herokuapp.com) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/) [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
@@ -7,6 +7,9 @@ DEMO: [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://vch1.hero
 It is a group video chat application which uses web sockets, webRTC technology with mesh topology to do peer to  peer connection between users.	
 
 After joining room all users can do video chat, text chat, watch any you-tube video together by real time synchronization of videos like any user pause or play video will leads to same effect on all other ends.
+<strong>This project is under development</strong>, currently support video call one at a Time. 
+<strong>Next objective is to implement SFU or MCU Architectures</strong> for group video connection.
+Currently Mesh Topolgy is under usage for group video call.
 
 ##### REQUIREMENTS:
 
