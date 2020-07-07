@@ -1,0 +1,32 @@
+.messageBox {
+  display: inline-block;
+  max-width: 80%;
+}
+.left {
+  justify-content: flex-end;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+}
+.right {
+  justify-content: flex-start;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}
+.messageContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+.justifyStart {
+  justify-content: flex-start;
+}
+
+.justifyEnd {
+  justify-content: flex-end;
+}
+.messageText img {
+  vertical-align: middle;
+}
+
+.backgroundBlue {
+  background: #3498db;
+}

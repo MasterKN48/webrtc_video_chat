@@ -1,0 +1,33 @@
+{
+  "name": "groupvideochat",
+  "version": "1.0.0",
+  "description": "a group video chat application",
+  "main": "server.js",
+  "scripts": {
+    "start": "forever server.js",
+    "dev": "nodemon server.js",
+    "install-all": "npm install && cd client && npm install",
+    "production": "npm run install-all && cd client && npm run build && cd .. && npm start",
+    "development": "npm run install-all && npm run dev"
+  },
+  "keywords": [
+    "webrtc",
+    "peer",
+    "socket-io",
+    "video-chat"
+  ],
+  "git": "https://github.com/MasterKN48/Group_Video_Chat.git",
+  "homepage": "https://vch1.herokuapp.com",
+  "author": "masterkn48",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "forever": "^3.0.0",
+    "morgan": "^1.10.0",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
