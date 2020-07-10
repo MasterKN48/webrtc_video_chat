@@ -107,7 +107,7 @@ const Join = () => {
             href="https://www.webfx.com/tools/emoji-cheat-sheet/"
             className="text-dark font-weight-bold"
           >
-            Emoji Cheahsheet
+            Emoji Cheatsheet
             <span className="ml-1">
               <i className="las la-smile-wink la-lg"></i>
             </span>
@@ -118,7 +118,7 @@ const Join = () => {
             className="text-info font-weight-bold"
             href="https://github.com/masterkn48"
           >
-            Created By MasterKN <i class="lab la-github-alt la-lg"></i>
+            Created By MasterKN <i className="lab la-github-alt la-lg"></i>
           </a>
         </footer>
       </div>

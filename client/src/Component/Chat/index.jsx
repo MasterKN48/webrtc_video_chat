@@ -36,7 +36,7 @@ const Chat = (props) => {
   const peerRef = useRef(); //? hold peerConnection Object
   const remoteVideo = useRef(); //? hold remote user video stream object
   const dataChannel = useRef(); //? hold dataChannel Event
-
+  const senders = useRef([]); //? ....
   useEffect(() => {
     if (props.location.state.name === "" || props.location.state.room === "") {
       props.history.location.push("/");
@@ -142,7 +142,9 @@ const Chat = (props) => {
 
     streamRef.current //* attach caller video stream to peer connection
       .getTracks() //? => [audioTrack,videoTrack]
-      .forEach((track) => peerRef.current.addTrack(track, streamRef.current)); //? add both tracks as MediaObject type from streamRef
+      .forEach((track) =>
+        senders.current.push(peerRef.current.addTrack(track, streamRef.current))
+      ); //? add both tracks as MediaObject type from streamRef
 
     peerRef.current.onicecandidate = (
       e //? getting this event from STUN SERVER with ICE-Candidate(e)
@@ -223,7 +225,7 @@ const Chat = (props) => {
       streamRef.current //* attach receiver video stream to peer connection
         .getTracks() //? => [audioTrack,videoTrack]
         .forEach(
-          (track) => peerRef.current.addTrack(track, streamRef.current) //? add both tracks as MediaObject type from streamRef
+          (track) => senders.current.push(peerRef.current.addTrack(track, streamRef.current)) //? add both tracks as MediaObject type from streamRef
         );
     });
     //! Wait to reciever to accept Call
@@ -334,7 +336,7 @@ const Chat = (props) => {
   };
   const handleData = (e) => {
     const data = JSON.parse(e.data);
-    console.log(data);
+    
     if (data.type === "load") {
       setUrl(data.videoId);
       setLoad(true);
@@ -354,6 +356,24 @@ const Chat = (props) => {
       setReceivingCall(false);
       setCallAccepted(false);
     }
+  };
+  const shareScreen = () => {
+  
+    navigator.mediaDevices.getDisplayMedia({ cursor: true }).then((stream) => {
+      const screenTrack = stream.getTracks()[0];
+     
+      if (senders.current!==undefined) {
+        senders.current
+          .find((sender) => sender.track.kind === "video")
+          .replaceTrack(screenTrack);
+      }
+
+      screenTrack.onended = function () {
+        senders.current
+          .find((sender) => sender.track.kind === "video")
+          .replaceTrack(streamRef.current.getTracks()[1]);
+      };
+    });
   };
   return (
     <div className="m-4">
@@ -387,6 +407,12 @@ const Chat = (props) => {
                       ref={localVideo}
                       autoPlay
                     />
+                     {callAccepted ? <button
+                        className="m-2 btn btn-sm btn-primary text-info"
+                        onClick={()=>shareScreen()}
+                      >
+                        Share screen
+                      </button> :null}
                   </div>
                 </div>
               </div>
@@ -419,7 +445,7 @@ const Chat = (props) => {
                     url={
                       load
                         ? url
-                        : "https://twitter.com/i/status/1279147101054623744"
+                        : ""
                     }
                     playing={play}
                     controls
@@ -508,7 +534,7 @@ const Chat = (props) => {
             href="https://www.webfx.com/tools/emoji-cheat-sheet/"
             className="text-dark font-weight-bold"
           >
-            Emoji Cheahsheet
+            Emoji Cheatsheet
             <span className="ml-1">
               <i className="las la-smile-wink la-lg"></i>
             </span>
@@ -519,7 +545,7 @@ const Chat = (props) => {
             className="text-info font-weight-bold"
             href="https://github.com/masterkn48"
           >
-            Created By MasterKN <i class="lab la-github-alt la-lg"></i>
+            Created By MasterKN <i className="lab la-github-alt la-lg"></i>
           </a>
         </footer>
       </div>
