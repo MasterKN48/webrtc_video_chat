@@ -57,7 +57,7 @@ const Join = () => {
                     </div>
                     <div className="form-group">
                       <div className="form-group">
-                        <label htmlFor="room">Password</label>
+                        <label htmlFor="room">Room</label>
                         <div className="input-group mb-4">
                           <div className="input-group-prepend">
                             <span className="input-group-text">

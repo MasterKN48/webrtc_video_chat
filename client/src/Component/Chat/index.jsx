@@ -225,7 +225,10 @@ const Chat = (props) => {
       streamRef.current //* attach receiver video stream to peer connection
         .getTracks() //? => [audioTrack,videoTrack]
         .forEach(
-          (track) => senders.current.push(peerRef.current.addTrack(track, streamRef.current)) //? add both tracks as MediaObject type from streamRef
+          (track) =>
+            senders.current.push(
+              peerRef.current.addTrack(track, streamRef.current)
+            ) //? add both tracks as MediaObject type from streamRef
         );
     });
     //! Wait to reciever to accept Call
@@ -336,7 +339,7 @@ const Chat = (props) => {
   };
   const handleData = (e) => {
     const data = JSON.parse(e.data);
-    
+
     if (data.type === "load") {
       setUrl(data.videoId);
       setLoad(true);
@@ -358,20 +361,21 @@ const Chat = (props) => {
     }
   };
   const shareScreen = () => {
-  
     navigator.mediaDevices.getDisplayMedia({ cursor: true }).then((stream) => {
       const screenTrack = stream.getTracks()[0];
-     
-      if (senders.current!==undefined) {
+
+      if (senders.current !== undefined) {
         senders.current
           .find((sender) => sender.track.kind === "video")
           .replaceTrack(screenTrack);
+        localVideo.current.srcObject = stream;
       }
 
       screenTrack.onended = function () {
         senders.current
           .find((sender) => sender.track.kind === "video")
           .replaceTrack(streamRef.current.getTracks()[1]);
+        localVideo.current.srcObject = streamRef.current;
       };
     });
   };
@@ -407,12 +411,14 @@ const Chat = (props) => {
                       ref={localVideo}
                       autoPlay
                     />
-                     {callAccepted ? <button
+                    {callAccepted ? (
+                      <button
                         className="m-2 btn btn-sm btn-primary text-info"
-                        onClick={()=>shareScreen()}
+                        onClick={() => shareScreen()}
                       >
                         Share screen
-                      </button> :null}
+                      </button>
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -442,11 +448,7 @@ const Chat = (props) => {
               <div className="carousel-inner rounded">
                 <div className="carousel-item active">
                   <ReactPlayer
-                    url={
-                      load
-                        ? url
-                        : ""
-                    }
+                    url={load ? url : ""}
                     playing={play}
                     controls
                     onPlay={playVideo}
