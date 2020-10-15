@@ -6,7 +6,9 @@ const addUser = ({ id, name, room }) => {
     (user) => user.room === room && user.name === name
   );
   if (exisitingUser) {
-    return { error: "User name is taken" };
+    return {
+      error: "This username is already taken,please use different username.",
+    };
   }
   const user = { id, name, room };
   users.push(user);

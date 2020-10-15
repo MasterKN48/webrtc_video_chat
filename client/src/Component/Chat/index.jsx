@@ -10,7 +10,7 @@ const socket = openSocket("/");
 
 const Chat = (props) => {
   //! Users and Room Related
-  const [name, setName] = useState(""); //* hold cuurent user name
+  const [name, setName] = useState(""); //* hold current user name
   const [yourID, setYourID] = useState(""); //* hold current userId
   const [room, setRoom] = useState(""); //* hold current room name
   const [users, setUsers] = useState([]); //* hold all users data
