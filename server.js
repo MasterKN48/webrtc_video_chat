@@ -32,6 +32,7 @@ io.on("connection", (socket) => {
     });
     console.log(user, "join");
     if (error) {
+      console.log({ error });
       return callback({ error });
     }
 
@@ -52,7 +53,7 @@ io.on("connection", (socket) => {
     });
     callback();
   });
-  //? recive message from client
+  //? receive message from client
   socket.on("sendMessage", (message, callback) => {
     const user = getUser(socket.id);
     // console.log(user);
