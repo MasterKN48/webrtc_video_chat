@@ -4,7 +4,6 @@ const http = require("http");
 const morgon = require("morgan");
 const cors = require("cors");
 const app = express();
-const router = require("./router");
 const path = require("path");
 const server = http.createServer(app);
 const io = socketio(server);
@@ -12,7 +11,7 @@ const { addUser, removeUser, getUser, getUsersInRoom } = require("./users");
 
 app.use(cors());
 app.use(morgon("dev"));
-app.use(router);
+
 //? server static flies
 app.use(express.static("client/build"));
 app.get("*", (req, res) => {

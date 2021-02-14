@@ -3,7 +3,6 @@ import "./app.scss";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 const Join = lazy(() => import("./Component/Join"));
 const Chat = lazy(() => import("./Component/Chat"));
-const Temp = lazy(() => import("./Component/Chat/Temp"));
 const App = () => {
   return (
     <BrowserRouter>
@@ -21,7 +20,6 @@ const App = () => {
         >
           <Route path="/" exact component={Join} />
           <Route path="/chat" component={Chat} />
-          <Route path="/temp" component={Temp} />
         </Suspense>
       </Switch>
     </BrowserRouter>

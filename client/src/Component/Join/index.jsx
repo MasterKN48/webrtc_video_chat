@@ -22,8 +22,8 @@ const Join = () => {
                       />
                     </div>
                   </div>
-                  <div className="col-md-7 text-center">
-                    <h4 className="mt-4">Group Video Chat</h4>
+                  <div className="col-md-7 ">
+                    <h4 className="mt-4">Video Chat</h4>
                   </div>
                 </div>
               </div>

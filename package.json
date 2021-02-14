@@ -8,7 +8,8 @@
     "dev": "nodemon server.js",
     "install-all": "npm install && cd client && npm install",
     "production": "npm run install-all && cd client && npm run build && cd .. && npm start",
-    "development": "npm run install-all && npm run dev"
+    "development": "npm run install-all && npm run dev",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "keywords": [
     "webrtc",
@@ -23,11 +24,11 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "forever": "^3.0.2",
+    "forever": "^3.0.4",
     "morgan": "^1.10.0",
-    "socket.io": "^2.3.0"
+    "socket.io": "^3.1.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.5"
+    "nodemon": "^2.0.7"
   }
 }

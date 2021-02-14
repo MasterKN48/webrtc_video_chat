@@ -75,10 +75,16 @@ const Chat = (props) => {
     }
     return () => {
       loadVideo.current = null;
-      streamRef.current = null;
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => {
+          track.stop();
+        });
+      }
       dataChannel.current = null;
-      socket.emit("disconnect");
-      socket.off();
+      if (socket) {
+        socket.emit("disconnect");
+        socket.close();
+      }
       if (peerRef.current) {
         peerRef.current.close();
       }
@@ -164,8 +170,8 @@ const Chat = (props) => {
       if (offer) {
         peerRef.current.setLocalDescription(offer); //? save offer data as localDesc
         let caller = { id: yourID, name: name };
-        let signal = peerRef.current.localDescription; //? get created offer which was save as localDesc
-        socket.emit("sendOffer", { receiver, caller, signal }); //? send offer to receiver end
+        //let signal = peerRef.current.localDescription; //? get created offer which was save as localDesc
+        socket.emit("sendOffer", { receiver, caller, signal: offer }); //? send offer to receiver end
       }
     } catch (error) {
       console.error(error);
