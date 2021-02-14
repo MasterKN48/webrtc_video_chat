@@ -1,13 +1,20 @@
 const users = [];
+
 const addUser = ({ id, name, room }) => {
+  if (name.length < 1 || room.length < 1) {
+    return {
+      error: "Invalid user name and room name.",
+    };
+  }
   name = name.trim().toLowerCase();
   room = room.trim().toLowerCase();
-  const exisitingUser = users.find(
+  const exisitingUser = users.findIndex(
     (user) => user.room === room && user.name === name
   );
-  if (exisitingUser) {
+  if (exisitingUser !== -1) {
     return {
       error: "This username is already taken,please use different username.",
+      user: { name, room },
     };
   }
   const user = { id, name, room };

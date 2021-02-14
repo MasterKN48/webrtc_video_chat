@@ -4,15 +4,14 @@ const http = require("http");
 const morgon = require("morgan");
 const cors = require("cors");
 const app = express();
-const router = require("./router");
 const path = require("path");
 const server = http.createServer(app);
-const io = socketio(server);
+const io = socketio(server, { path: "/api/chatbox" });
 const { addUser, removeUser, getUser, getUsersInRoom } = require("./users");
 
 app.use(cors());
 app.use(morgon("dev"));
-app.use(router);
+
 //? server static flies
 app.use(express.static("client/build"));
 app.get("*", (req, res) => {
@@ -21,38 +20,35 @@ app.get("*", (req, res) => {
 
 //! Chat service
 io.on("connection", (socket) => {
-  //console.log(socket.id);
+  console.log("new connection");
   //* socket deals as cuurent user
   //* io use for global
-  socket.on("join", (data, callback) => {
+  socket.on("join room", ({ name, room, id }) => {
     const { error, user } = addUser({
-      id: socket.id,
-      name: data.name,
-      room: data.room,
+      id,
+      name,
+      room,
     });
     console.log(user, "join");
     if (error) {
-      console.log({ error });
-      return callback({ error });
+      let msg = error.error;
+      socket.emit("failedJoin", msg);
     }
-
     socket.emit("message", {
       user: "Admin",
       text: `${user.name} welcome to the room`,
     }); //? send message event to current user only
-
+    socket.join(user.room);
     socket.broadcast.to(user.room).emit("message", {
       user: "Admin",
       text: `${user.name} has joined the room`,
     }); //? send message event to other user but not current user
-
-    socket.join(user.room);
     io.to(user.room).emit("roomData", {
       room: user.room,
       users: getUsersInRoom(user.room),
     });
-    callback();
   });
+
   //? receive message from client
   socket.on("sendMessage", (message, callback) => {
     const user = getUser(socket.id);
