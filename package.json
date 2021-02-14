@@ -1,7 +1,7 @@
 {
-  "name": "groupvideochat",
+  "name": "videochat",
   "version": "1.0.0",
-  "description": "a group video chat application",
+  "description": "a video chat application",
   "main": "server.js",
   "scripts": {
     "start": "forever server.js",
